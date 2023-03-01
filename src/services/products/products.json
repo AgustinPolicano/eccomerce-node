@@ -14,7 +14,7 @@
       {
         "id": 2,
         "title": "iPhone 42",
-        "description": "An apple mobile which is nothing like apple",
+        "description": "An apple version 42",
         "price": 549,
         "discountPercentage": 12.96,
         "rating": 4.69,
@@ -26,7 +26,7 @@
       {
         "id": 3,
         "title": "iPhone 12",
-        "description": "An apple mobile which is nothing like apple",
+        "description": "An apple version 12",
         "price": 549,
         "discountPercentage": 12.96,
         "rating": 4.69,
@@ -38,7 +38,7 @@
       {
         "id": 4,
         "title": "iPhone 123",
-        "description": "An apple mobile which is nothing like apple",
+        "description": "An apple version 123",
         "price": 549,
         "discountPercentage": 12.96,
         "rating": 4.69,
