@@ -1,5 +1,5 @@
 import productsData from './products.json';
-import { productsEntry } from './productsType';
+import { productsEntry } from '../../models/products.model';
 
 const products: Array<productsEntry> = productsData
 
