@@ -3,15 +3,16 @@ import {
   getAllProducts,
   getProductById,
 } from "../services/products/productsService";
-import { getAllUsers } from "../services/users/userService";
+
 
 const router = express.Router();
 import UserModel from "../models/user.model";
-import { SaveOptions } from "mongoose";
 
-router.get("/get", (_req, res) => {
+router.get("/getAll", (_req, res) => {
   try {
-    res.send(getAllUsers());
+    UserModel.find().then((items) => {
+      res.send(items);
+    });
   } catch (e) {
     res.status(400).send(e);
   }
@@ -25,7 +26,7 @@ router.post("/", (req, res) => {
     user.password = req.body.password;
     user.save().then((e) => {
       console.log(e);
-    }); 
+    });
   } catch (e) {
     res.status(400).send(e);
   }

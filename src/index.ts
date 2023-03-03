@@ -15,13 +15,16 @@ const PORT = 3000;
 
 async function connectDB() {
   const db = await mongoose.connect(
-    "mongodb+srv://policanoagus:DK0dW5yXKf421VU2@cluster0.tfjuvya.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://policanoagus:DK0dW5yXKf421VU2@cluster0.tfjuvya.mongodb.net/?retryWrites=true&w=majority", {
+      autoIndex: true, //make this true
+    }
   );
   console.log("database connected to", db.connection.db.databaseName);
 
 }
 
 connectDB();
+
 
 app.get("/ping", (req, res) => {
   console.log("ping");
