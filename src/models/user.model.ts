@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 export const UserSchema = new Schema({
-  userName: { type: String, required: true, minLenght: 6, unique: true },
   email: {
     type: String,
     required: true,
@@ -23,10 +22,7 @@ export const UserSchema = new Schema({
 
 const UserModel = mongoose.model("Usuarios", UserSchema);
 
-UserSchema.path('email').validate(async (email) => {
-  const emailCount = await mongoose.models.Usuarios.countDocuments({ email })
-  return !emailCount
-}, 'Email already exists')
+
 
 
 export default UserModel;

@@ -11,14 +11,13 @@ export const getAllUsers = async function getAllUsers() {
   }
 };
 
-/* export function updateUser(email: string) {
-  console.log(email)
-  UserModel.find({ email }, function (err: any, docs: any) {
-    if (docs.length) {
-      console.log("Name exists already");
-    } else {
-      console.log("No existe todavia..")
-    }
-  });
-}
- */
+export const isCorrectPasword = (
+  passwordUser: string,
+  dataBasePassword: string
+): boolean => {
+  if (passwordUser === dataBasePassword) {
+    console.log("son iguales!!");
+    return true;
+  } else console.log("NO LO SON!!!!!!!");
+  return false;
+};

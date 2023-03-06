@@ -1,12 +1,10 @@
 import express from "express";
-import {
-  getAllProducts,
-  getProductById,
-} from "../services/products/productsService";
-
-
 const router = express.Router();
-import UserModel from "../models/user.model";
+import UserModel, { UserSchema } from "../models/user.model";
+import mongoose from "mongoose";
+import { isCorrectPasword } from "../services/users/userService";
+import passport from "passport";
+
 
 router.get("/getAll", (_req, res) => {
   try {
@@ -18,38 +16,42 @@ router.get("/getAll", (_req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
+router.post("/register", (req, res) => {
   try {
     let user = new UserModel();
-    user.userName = req.body.userName;
     user.email = req.body.email;
     user.password = req.body.password;
-    user.save().then((e) => {
-      console.log(e);
+    UserModel.findOne({ email: user.email }).then((p) => {
+      if (p) {
+        res.status(500).send("Ya existe una cuenta asociada con este email, ingresa otro.");
+      } else {
+        user.save().then((e) => {
+          res.status(200).send('Cuenta creada con exito')
+        })
+      }
     });
   } catch (e) {
     res.status(400).send(e);
   }
 });
 
-/* router.get('/:id' , (req, res) => {
-    try {
-        const productById = getProductById(Number(req.params.id))
-        res.send(productById)
-    }
-    catch(e){
-        res.status(400).send(e)
-    }
-})
-
-router.get('/:id' , (req, res) => {
-    try {
-        const productById = getProductById(Number(req.params.id))
-        res.send(productById)
-    }
-    catch(e){
-        res.status(400).send(e)
-    }
-}) */
+router.post("/login", (req, res) => {
+  try {
+    const { email, password } = req.body;
+    UserModel.findOne({ email: email }).then((p) => {
+      if (p) {
+        if (isCorrectPasword(password, p.password)) {
+          res.status(200).send("Email autenticado correctamente");
+        } else {
+          res.status(500).send("Email y/o contraseña incorrectos");
+        }
+      } else {
+        res.status(500).send("No existe el Email");
+      }
+    });
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
 
 export default router;
