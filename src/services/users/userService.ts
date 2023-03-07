@@ -16,8 +16,7 @@ export const isCorrectPasword = (
   dataBasePassword: string
 ): boolean => {
   if (passwordUser === dataBasePassword) {
-    console.log("son iguales!!");
     return true;
-  } else console.log("NO LO SON!!!!!!!");
+  } else;
   return false;
 };

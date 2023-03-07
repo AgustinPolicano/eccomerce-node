@@ -8,14 +8,6 @@ export const UserSchema = new Schema({
     required: true,
     minLenght: 6,
     unique: true,
-    /*   validate: {
-      validator: function (v: any, cb: any) {
-        UserModel.find({ name: v }, function (err: any, docs: any) {
-          cb(docs.length == 0);
-        });
-      },
-      message: "User already exists!",
-    }, */
   },
   password: { type: String, required: true, minLenght: 6 },
 });

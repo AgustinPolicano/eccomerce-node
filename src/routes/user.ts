@@ -4,7 +4,7 @@ import UserModel, { UserSchema } from "../models/user.model";
 import mongoose from "mongoose";
 import { isCorrectPasword } from "../services/users/userService";
 import passport from "passport";
-
+import jwt from "jsonwebtoken";
 
 router.get("/getAll", (_req, res) => {
   try {
@@ -23,11 +23,17 @@ router.post("/register", (req, res) => {
     user.password = req.body.password;
     UserModel.findOne({ email: user.email }).then((p) => {
       if (p) {
-        res.status(500).send("Ya existe una cuenta asociada con este email, ingresa otro.");
+        res
+          .status(500)
+          .send("Ya existe una cuenta asociada con este email, ingresa otro.");
       } else {
+        const token = jwt.sign({ user }, "my_secret_key", {
+          expiresIn: "1h",
+        });
+        console.log(token)
         user.save().then((e) => {
-          res.status(200).send('Cuenta creada con exito')
-        })
+          res.status(200).send("Cuenta creada con exito");
+        });
       }
     });
   } catch (e) {
@@ -38,9 +44,12 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   try {
     const { email, password } = req.body;
-    UserModel.findOne({ email: email }).then((p) => {
-      if (p) {
-        if (isCorrectPasword(password, p.password)) {
+    UserModel.findOne({ email: email }).then((user) => {
+      if (user) {
+        if (isCorrectPasword(password, user.password)) {
+          const token = jwt.sign({ user }, "my_secret_key", {
+            expiresIn: "1h",
+          });
           res.status(200).send("Email autenticado correctamente");
         } else {
           res.status(500).send("Email y/o contraseña incorrectos");
